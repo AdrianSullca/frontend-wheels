@@ -3,6 +3,19 @@ import { LoginFormData, RegisterFormData } from "../types/interfaces";
 import { json, redirect } from "@remix-run/react";
 import { createCookieSessionStorage } from "@remix-run/node";
 
+export async function requireAuth(request: Request) {
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie")
+  );
+  const authToken = session.get("authToken");
+
+  if (!authToken) {
+    throw redirect("/auth?mode=login");
+  }
+
+  return authToken;
+}
+
 export const sessionStorage = createCookieSessionStorage({
   cookie: {
     name: "authToken",
@@ -17,7 +30,7 @@ export const sessionStorage = createCookieSessionStorage({
 async function createUserSession(authToken: string) {
   const session = await sessionStorage.getSession();
   session.set("authToken", authToken);
-  console.log("Sesión creada con token:", authToken);
+
   return redirect("/announcements", {
     headers: {
       "Set-Cookie": await sessionStorage.commitSession(session),
@@ -56,6 +69,40 @@ export async function login({ email, password }: LoginFormData) {
       { status: 500 }
     );
   }
+}
+
+export async function logout(request: Request) {
+  await axios.post("http://localhost:8000/api/logout", null, {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${await requireAuth(request)}`,
+    },
+    withCredentials: true,
+  });
+
+  const session = await sessionStorage.getSession(
+    request.headers.get("Cookie")
+  );
+
+  session.unset("authToken");
+  return redirect("/auth?mode=login", {
+    headers: {
+      "Set-Cookie": await sessionStorage.destroySession(session),
+    },
+  });
+}
+
+export async function getUserByToken(request: Request) {
+  const response = await axios.get("http://localhost:8000/api/user", {
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json",
+      Authorization: `Bearer ${await requireAuth(request)}`,
+    },
+    withCredentials: true,
+  });
+  return response.data.user;
 }
 
 export async function register({

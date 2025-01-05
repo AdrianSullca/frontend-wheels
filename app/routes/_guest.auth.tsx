@@ -52,7 +52,7 @@ export default function AuthPage() {
   const mode = searchParams.get("mode") || "login";
 
   return (
-    <div className="bg-custom-body text-black">
+    <div className="min-h-screen bg-custom-body mt-[57px] text-black">
       <div className="flex justify-center max-w-[1400px] mx-auto">
         <div className="w-full lg:ml-10 my-12">
           {mode === "login" ? <LoginForm /> : <RegisterForm />}

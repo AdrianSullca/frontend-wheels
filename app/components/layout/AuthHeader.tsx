@@ -1,12 +1,12 @@
 import { Link } from "@remix-run/react";
-import Logo from "../../utils/Logo";
 import { Dropdown } from "flowbite-react";
 import {
   ProfileIcon,
   TransactionsIcon,
   SettingsIcon,
   LogoutIcon,
-} from "../utils/IconsAndLogo";
+  TextLogoWheelsLink,
+} from "../../utils/IconsAndLogo";
 
 interface User {
   name: string;
@@ -21,7 +21,8 @@ export default function AuthHeader({ user }: AuthHeaderProps) {
   return (
     <header className="fixed top-0 left-0 w-full bg-white py-3 px-4 text-white border-b z-50">
       <div className="flex items-center justify-between max-w-[1705px] mx-auto">
-        <Logo />
+        <TextLogoWheelsLink />
+
         <nav>
           <ul className="flex gap-1">
             <li className="pr-3">
