@@ -16,7 +16,8 @@ export default {
         "custom-gray-hover": "#3b3b3b",
         "custom-body": "#f9f9f9",
         "custom-melon": "#fee0b3",
-        "custom-orange": "#cf7d2f"
+        "custom-orange": "#d16d0f",
+        "custom-orange-hover": "#cf7d2f"
       },
       fontFamily: {
         sans: [

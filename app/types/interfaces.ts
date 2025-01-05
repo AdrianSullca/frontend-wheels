@@ -24,8 +24,11 @@ export interface Announcement {
   model?: string | undefined;
   year?: string | undefined;
   photoUrls: string[];
-  user: { name: string}
+  user: {
+    created_at: string;
+    name: string;
+  };
   state?: string | undefined;
-  created_at?: string ;
+  created_at?: string;
   updated_at?: string;
 }

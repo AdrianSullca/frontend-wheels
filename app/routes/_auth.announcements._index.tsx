@@ -30,14 +30,7 @@ export default function AnnouncementsPage() {
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-6 mx-5 sm:mx-7 md:mx-10 gap-6 grid-rows-4">
         {announcements && announcements.length > 0 ? (
           announcements.map((announcement: Announcement) => (
-            <AnnouncementCard
-              key={announcement.id}
-              title={announcement.title}
-              price={Number(announcement.price)}
-              user_name={announcement.user.name}
-              brand={announcement.brand || ""}
-              photoUrls={announcement.photoUrls}
-            />
+            <AnnouncementCard announcement={announcement} key={announcement.id} />
           ))
         ) : (
           <p>No announcements available.</p>

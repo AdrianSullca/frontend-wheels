@@ -1,19 +1,14 @@
+import { Link } from "@remix-run/react";
 import { Carousel } from "flowbite-react";
+import { Announcement } from "../../types/interfaces";
 
 interface AnnouncementCardProps {
+  announcement: Announcement;
   key: number;
-  title: string;
-  price: number;
-  user_name: string;
-  brand: string;
-  photoUrls: string[];
 }
 
 export default function AnnouncementCard({
-  title,
-  price,
-  user_name,
-  photoUrls,
+  announcement,
 }: AnnouncementCardProps) {
   return (
     <div className="block rounded-xl max-w-[480px] mx-auto w-full">
@@ -25,14 +20,19 @@ export default function AnnouncementCard({
           leftControl={<ChevronLeft />}
           rightControl={<ChevronRight />}
         >
-          {photoUrls.length > 0 ? (
-            photoUrls.map((url, index) => (
+          {announcement.photoUrls.length > 0 ? (
+            announcement.photoUrls.map((url, index) => (
               <div key={index} className="relative h-full w-full">
-                <img
-                  src={url}
-                  alt={`${title} - img ${index + 1}`}
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
+                <Link
+                  to={`/announcements/${announcement.id}/details`}
+                  className="h-full w-full"
+                >
+                  <img
+                    src={url}
+                    alt={`${announcement.title} - img ${index + 1}`}
+                    className="absolute inset-0 w-full h-full object-cover"
+                  />
+                </Link>
               </div>
             ))
           ) : (
@@ -45,20 +45,18 @@ export default function AnnouncementCard({
             </div>
           )}
         </Carousel>
-        <div className="absolute bottom-2 left-1/2 transform -translate-x-1/2 flex space-x-1">
-          {photoUrls.map((_, index) => (
-            <span
-              key={index}
-              className="w-1.5 h-1.5 bg-white rounded-full opacity-50"
-            ></span>
-          ))}
-        </div>
       </div>
-      <div className="mt-3">
-        <p className="text-black line-clamp-1">{title}</p>
-        <p className="text-gray-600">{user_name}</p>
-        <p className="text-gray-600 font-bold pt-1">{price.toFixed(2)} €</p>
-      </div>
+
+      <Link
+        to={`/announcements/${announcement.id}/details`}
+        className="block pt-3"
+      >
+        <p className="text-black line-clamp-1">{announcement.title}</p>
+        <p className="text-gray-600">{announcement.user.name}</p>
+        <p className="text-gray-600 font-bold pt-1">
+          {Number(announcement.price).toFixed(2)} €
+        </p>
+      </Link>
     </div>
   );
 }
