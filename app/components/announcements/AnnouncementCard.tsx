@@ -1,6 +1,6 @@
 import { Carousel } from "flowbite-react";
 
-interface CardAnnouncementProps {
+interface AnnouncementCardProps {
   key: number;
   title: string;
   price: number;
@@ -9,12 +9,12 @@ interface CardAnnouncementProps {
   photoUrls: string[];
 }
 
-export default function CardAnnouncement({
+export default function AnnouncementCard({
   title,
   price,
   user_name,
   photoUrls,
-}: CardAnnouncementProps) {
+}: AnnouncementCardProps) {
   return (
     <div className="block rounded-xl max-w-[480px] mx-auto w-full">
       <div className="aspect-square overflow-hidden rounded-xl relative group">
