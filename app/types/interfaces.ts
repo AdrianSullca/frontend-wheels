@@ -6,9 +6,26 @@ export interface LoginFormData {
 }
 
 export interface RegisterFormData {
-  name: string,
+  name: string;
   email: string;
   password: string;
   password_confirmation: string;
   phone_number: string;
+}
+
+export interface Announcement {
+  id: number;
+  user_id: number;
+  title: string;
+  price: string;
+  description?: string | undefined;
+  kilometers?: string | undefined;
+  brand?: string | undefined;
+  model?: string | undefined;
+  year?: string | undefined;
+  photoUrls: string[];
+  user: { name: string}
+  state?: string | undefined;
+  created_at?: string ;
+  updated_at?: string;
 }
