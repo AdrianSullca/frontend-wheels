@@ -2,10 +2,43 @@
 @tailwind components;
 @tailwind utilities;
 
+@font-face {
+  font-family: "custom-font";
+  src: url("./../assets/fonts/dinnextw1g.otf") format("opentype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "custom-font";
+  src: url("./../assets/fonts/dinnextw1g_medium.otf") format("opentype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+/* Fuente Bold */
+@font-face {
+  font-family: "custom-font";
+  src: url("./../assets/fonts/dinnextw1g_bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+input:focus,
+textarea:focus,
+select:focus {
+  border-color: black !important;
+  outline: none !important;
+}
+
 html,
 body {
   @apply bg-white dark:bg-gray-950;
-
+  font-family: "custom-font", sans-serif;
   @media (prefers-color-scheme: dark) {
     color-scheme: dark;
   }

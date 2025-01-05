@@ -1,9 +1,16 @@
 import type { Config } from "tailwindcss";
+import flowbite from "flowbite-react/tailwind";
 
 export default {
-  content: ["./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}"],
+  content: ["./app/**/{**,.client,.server}/**/*.{js,jsx,ts,tsx}",  flowbite.content(),],
   theme: {
     extend: {
+      screens: {
+        'sm': '550px',   
+        'md': '950px',   
+        'lg': '1128px',  
+        'xl': '1540px', 
+      },
       colors: {
         "custom-gray": "#1a1a1a",
         "custom-gray-hover": "#3b3b3b",
@@ -31,5 +38,9 @@ export default {
       },
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/line-clamp'),
+    require('flowbite/plugin'),
+    flowbite.plugin(),
+  ],
 } satisfies Config;
