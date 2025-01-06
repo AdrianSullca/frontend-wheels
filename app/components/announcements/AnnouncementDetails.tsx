@@ -1,18 +1,11 @@
 import { Announcement } from "../../types/interfaces";
 import { Carousel } from "flowbite-react";
+import { Link } from "@remix-run/react";
+import { formatDate } from "../../utils/helpers";
 
 interface AnnouncementDetailsProps {
   announcement: Announcement;
   sameBrandAnnouncements: Announcement[];
-}
-
-function formatDate(dateString: string) {
-  const date = new Date(dateString);
-  return new Intl.DateTimeFormat("en-EN", {
-    day: "numeric",
-    month: "long",
-    year: "numeric",
-  }).format(date);
 }
 
 export default function AnnouncementDetails({
@@ -68,22 +61,24 @@ export default function AnnouncementDetails({
       </div>
       <div className="grid grid-cols-[1fr,auto] gap-6 mt-5">
         <div className="flex flex-col items-center gap-6 col-start-1 col-end-2">
-          <div className="flex items-center gap-4 bg-white px-6 py-4 w-full rounded-lg shadow-sm">
-            <img
-              src="https://flowbite.com/docs/images/carousel/carousel-2.svg"
-              alt="..."
-              width="35"
-              className="rounded-full"
-            />
-            <div>
-              <p className="text-black">
-                Annunciator: {announcement.user.name}
-              </p>
-              <p className="text-sm text-gray-500">
-                Registered on {formatDate(announcement.user.created_at)}
-              </p>
+          <Link className="w-full" to={`/user/${announcement.user_id}/profile`}>
+            <div className="flex items-center gap-4 bg-white px-6 py-4 w-full rounded-lg shadow-sm">
+              <img
+                src="https://flowbite.com/docs/images/carousel/carousel-2.svg"
+                alt="..."
+                width="35"
+                className="rounded-full"
+              />
+              <div>
+                <p className="text-black">
+                  Annunciator: {announcement.user.name}
+                </p>
+                <p className="text-sm text-gray-500">
+                  Registered on {formatDate(announcement.user.created_at)}
+                </p>
+              </div>
             </div>
-          </div>
+          </Link>
           <div className="bg-white p-6 w-full rounded-lg shadow-sm space-y-4">
             <div>
               <h2 className="font-semibold text-custom-orange mb-2 text-lg">

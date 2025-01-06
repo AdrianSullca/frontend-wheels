@@ -4,7 +4,6 @@ import { Announcement } from "../../types/interfaces";
 
 interface AnnouncementCardProps {
   announcement: Announcement;
-  key: number;
 }
 
 export default function AnnouncementCard({
@@ -52,7 +51,9 @@ export default function AnnouncementCard({
         className="block pt-3"
       >
         <p className="text-black line-clamp-1">{announcement.title}</p>
-        <p className="text-gray-600">{announcement.user.name}</p>
+        {announcement.user?.name && (
+          <p className="text-gray-600">{announcement.user.name}</p>
+        )}
         <p className="text-gray-600 font-bold pt-1">
           {Number(announcement.price).toFixed(2)} €
         </p>

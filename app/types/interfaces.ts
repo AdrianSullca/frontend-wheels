@@ -32,3 +32,37 @@ export interface Announcement {
   created_at?: string;
   updated_at?: string;
 }
+
+export interface Review {
+  id: number;
+  rating: string;
+  valuator: User;
+  rated_user_id: 2;
+  comment: string;
+  created_at: string;
+  updated_at?: string;
+}
+
+export interface User {
+  id: number;
+  name: string;
+  email: string;
+  email_verified_at?: string;
+  created_at?: string;
+  updated_at?: string;
+  phone_number: string;
+  profile_picture_path: string;
+  admin: 0;
+  enabled: 1;
+}
+
+export interface Stats {
+  announcements_count: number;
+  reviews_count: number;
+  total_favorites: number;
+}
+
+export interface UserInfo {
+  user: User;
+  stats: Stats;
+}
