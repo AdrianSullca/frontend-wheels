@@ -1,5 +1,7 @@
 import { Link } from "@remix-run/react";
 import { Dropdown } from "flowbite-react";
+import HamburgerMenu from "../utils/HamburgerMenu";
+
 import {
   ProfileIcon,
   TransactionsIcon,
@@ -7,14 +9,10 @@ import {
   LogoutIcon,
   TextLogoWheelsLink,
 } from "../../utils/IconsAndLogo";
-
-interface User {
-  name: string;
-  email: string;
-}
+import { User } from "../../types/interfaces";
 
 interface AuthHeaderProps {
-  user: User | null;
+  user: User;
 }
 
 export default function AuthHeader({ user }: AuthHeaderProps) {
@@ -25,7 +23,7 @@ export default function AuthHeader({ user }: AuthHeaderProps) {
 
         <nav>
           <ul className="flex gap-1">
-            <li className="pr-3">
+            <li className="pr-3 hidden sm:block">
               <Link to="/announcements/upload">
                 <button className="text-white flex items-center space-x-2 border border-custom-gray bg-custom-gray px-4 py-1 rounded-lg transition-all duration-300 hover:bg-custom-gray-hover hover:border-custom-gray-hover transition-colors">
                   <svg
@@ -45,20 +43,22 @@ export default function AuthHeader({ user }: AuthHeaderProps) {
                 </button>
               </Link>
             </li>
-            <li className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md">
-              <svg
-                fill="none"
-                stroke="black"
-                width="24"
-                height="24"
-                strokeWidth="1.4"
-                viewBox="0 0 24 24"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path d="M12 20a1 1 0 0 1-.437-.1C11.214 19.73 3 15.671 3 9a5 5 0 0 1 8.535-3.536l.465.465.465-.465A5 5 0 0 1 21 9c0 6.646-8.212 10.728-8.562 10.9A1 1 0 0 1 12 20z" />
-              </svg>
+            <li className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md hidden sm:block">
+              <Link to="/user/favorites">
+                <svg
+                  fill="none"
+                  stroke="black"
+                  width="24"
+                  height="24"
+                  strokeWidth="1.4"
+                  viewBox="0 0 24 24"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path d="M12 20a1 1 0 0 1-.437-.1C11.214 19.73 3 15.671 3 9a5 5 0 0 1 8.535-3.536l.465.465.465-.465A5 5 0 0 1 21 9c0 6.646-8.212 10.728-8.562 10.9A1 1 0 0 1 12 20z" />
+                </svg>
+              </Link>
             </li>
-            <li className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md">
+            <li className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md hidden sm:block">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 viewBox="0 0 24 24"
@@ -73,7 +73,7 @@ export default function AuthHeader({ user }: AuthHeaderProps) {
                 <path d="M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1"></path>
               </svg>
             </li>
-            <li className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md">
+            <li className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md hidden sm:block">
               <Dropdown
                 arrowIcon={false}
                 inline
@@ -102,9 +102,11 @@ export default function AuthHeader({ user }: AuthHeaderProps) {
                     {user ? user.name : "User"}
                   </span>
                 </Dropdown.Header>
-                <Dropdown.Item icon={ProfileIcon}>
-                  <span className="ml-1">Profile</span>
-                </Dropdown.Item>
+                <Link to={`/user/${user.id}/profile`} className="w-full">
+                  <Dropdown.Item icon={ProfileIcon}>
+                    <span className="ml-1">Profile</span>
+                  </Dropdown.Item>
+                </Link>
                 <Dropdown.Item icon={TransactionsIcon}>
                   <span className="ml-1">Transactions</span>
                 </Dropdown.Item>
@@ -118,6 +120,9 @@ export default function AuthHeader({ user }: AuthHeaderProps) {
                   </Dropdown.Item>
                 </Link>
               </Dropdown>
+            </li>
+            <li className="sm:hidden hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md">
+              <HamburgerMenu userId={user.id} />
             </li>
           </ul>
         </nav>
