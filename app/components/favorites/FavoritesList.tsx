@@ -20,8 +20,14 @@ interface FavoritesListProps {
 
 export default function FavoritesList({ favorites }: FavoritesListProps) {
   return (
-    <>
-    <h1 className="font-medium text-lg">Favorites list</h1>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      exit={{ opacity: 0 }}
+      layout
+    >
+      <h1 className="font-medium text-lg">Favorites list</h1>
       <motion.ul className="space-y-4">
         <AnimatePresence>
           {favorites.map((favorite) => (
@@ -29,6 +35,6 @@ export default function FavoritesList({ favorites }: FavoritesListProps) {
           ))}
         </AnimatePresence>
       </motion.ul>
-    </>
+    </motion.div>
   );
 }

@@ -3,7 +3,7 @@ import { Carousel } from "flowbite-react";
 import { Link, useFetcher } from "@remix-run/react";
 import { formatDate } from "../../utils/helpers";
 import { useEffect, useState } from "react";
-
+import { motion } from "framer-motion";
 interface AnnouncementDetailsProps {
   announcement: Announcement;
   sameBrandAnnouncements: Announcement[];
@@ -39,7 +39,14 @@ export default function AnnouncementDetails({
   };
 
   return (
-    <div className="flex flex-col max-w-[1100px] mx-auto text-black py-5">
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.4 }}
+      exit={{ opacity: 0 }}
+      layout
+      className="flex flex-col max-w-[1100px] mx-auto text-black py-5"
+    >
       <div className="flex justify-between items-center pb-5">
         <h1 className="text-2xl font-bold">{announcement.title}</h1>
 
@@ -206,7 +213,7 @@ export default function AnnouncementDetails({
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 }
 

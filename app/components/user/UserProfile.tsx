@@ -8,6 +8,8 @@ interface UserProfileProps {
   reviews: Review[];
 }
 
+import { motion } from "framer-motion";
+
 export default function UserProfile({
   userInfo,
   announcements,
@@ -15,7 +17,14 @@ export default function UserProfile({
 }: UserProfileProps) {
   return (
     <div className="max-w-[1400px] mx-auto text-black px-10">
-      <div className="grid md:grid-cols-[auto,1fr] mx-auto gap-6">
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.4 }}
+        exit={{ opacity: 0 }}
+        layout
+        className="grid md:grid-cols-[auto,1fr] mx-auto gap-6"
+      >
         <div className="col-start-1 col-end-2">
           <div className="max-w-[800px] sticky top-20 space-y-4">
             <div className="flex flex-col items-center text-black gap-4 bg-white px-6 py-6 w-full rounded-lg shadow-md">
@@ -59,7 +68,7 @@ export default function UserProfile({
           <AnnouncementAccordion announcements={announcements} />
           <ReviewAccordion reviews={reviews} />
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }

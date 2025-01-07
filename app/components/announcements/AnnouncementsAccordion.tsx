@@ -48,13 +48,7 @@ export default function AnnouncementsAccordion({
         layout
         className="bg-white rounded-lg shadow-sm text-black p-6"
       >
-        <motion.h1
-          layout
-          initial={{ opacity: 0, y: 0 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4 }}
-          className="font-medium text-custom-orange text-lg"
-        >
+        <motion.h1 layout className="font-medium text-custom-orange text-lg">
           Announcements
         </motion.h1>
 
@@ -94,10 +88,6 @@ export default function AnnouncementsAccordion({
                   ? "bg-white text-custom-gray border border-custom-gray hover:text-gray-500 hover:border-gray-500"
                   : "bg-custom-gray text-white border border-custom-gray hover:bg-custom-gray-hover"
               }`}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 0.4 }}
-              exit={{ opacity: 0 }}
               layout
             >
               {showMore ? "Show Less" : "Show More"}
