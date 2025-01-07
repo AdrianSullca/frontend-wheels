@@ -1,24 +1,57 @@
 import { Announcement } from "../../types/interfaces";
 import { Carousel } from "flowbite-react";
-import { Link } from "@remix-run/react";
+import { Link, useFetcher } from "@remix-run/react";
 import { formatDate } from "../../utils/helpers";
+import { useEffect, useState } from "react";
 
 interface AnnouncementDetailsProps {
   announcement: Announcement;
   sameBrandAnnouncements: Announcement[];
 }
 
+interface FetcherData {
+  success: number;
+  isFavorite: boolean;
+}
+
 export default function AnnouncementDetails({
   announcement,
 }: AnnouncementDetailsProps) {
+  const fetcher = useFetcher();
+  const [isFavorite, setIsFavorite] = useState(
+    announcement.isFavorite || false
+  );
+
+  useEffect(() => {
+    if (fetcher.data && (fetcher.data as FetcherData).success) {
+      setIsFavorite((fetcher.data as FetcherData).isFavorite);
+    }
+  }, [fetcher.data]);
+
+  const handleToggleFavorite = () => {
+    fetcher.submit(
+      { announcementId: announcement.id },
+      {
+        method: "POST",
+        action: `/announcements/${announcement.id}/details`,
+      }
+    );
+  };
+
   return (
     <div className="flex flex-col max-w-[1100px] mx-auto text-black py-5">
       <div className="flex justify-between items-center pb-5">
         <h1 className="text-2xl font-bold">{announcement.title}</h1>
-        <button className="flex gap-2 hover:bg-gray-200 p-1 px-3 rounded-md border transition-all transition duration-300">
+
+        <button
+          onClick={handleToggleFavorite}
+          className={`flex gap-2 p-1 px-3 rounded-md border transition-all duration-300 ${
+            isFavorite ? "bg-gray-200" : "hover:bg-gray-200"
+          }`}
+        >
           <svg
-            fill="none"
-            stroke="black"
+            fill={isFavorite ? "red" : "none"}
+            stroke={isFavorite ? "red" : "black"}
             width="24"
             height="24"
             strokeWidth="1.4"
@@ -27,7 +60,7 @@ export default function AnnouncementDetails({
           >
             <path d="M12 20a1 1 0 0 1-.437-.1C11.214 19.73 3 15.671 3 9a5 5 0 0 1 8.535-3.536l.465.465.465-.465A5 5 0 0 1 21 9c0 6.646-8.212 10.728-8.562 10.9A1 1 0 0 1 12 20z" />
           </svg>
-          <span>Save as favorite</span>
+          <span>{isFavorite ? "Remove favorite" : "Save as favorite"}</span>
         </button>
       </div>
       <div className="aspect-[16/9] overflow-hidden rounded-xl relative group max-h-[450px]">

@@ -1,29 +1,32 @@
-import { LoaderFunction, json } from "@remix-run/node";
+import { ActionFunctionArgs, LoaderFunction, json } from "@remix-run/node";
 import { useLoaderData } from "@remix-run/react";
 import { requireAuth } from "../data/auth.server";
 import AnnouncementDetails from "../components/announcements/AnnouncementDetails";
-import axios from "axios";
+import { getAnnouncementById } from "../data/announcement.server";
+import { toggleFavorite } from "../data/favorites.server";
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const authToken = await requireAuth(request);
   const { id } = params;
-
-  const response = await axios.get(
-    `http://localhost:8000/api/announcements/${id}`,
-    {
-      headers: {
-        Authorization: `Bearer ${authToken}`,
-        "Content-Type": "application/json",
-        Accept: "application/json",
-      },
-      withCredentials: true,
-    }
-  );
-
-  const announcement = response.data.announcement;
-
+  const announcementId = Number(id);
+  const announcement = await getAnnouncementById(authToken, announcementId);
+  
   return json({ announcement });
 };
+
+export async function action({ request }: ActionFunctionArgs) {
+  const authToken = await requireAuth(request);
+  const formData = await request.formData();
+  const announcementId = formData.get("announcementId");
+
+  try {
+    const isFavorite = await toggleFavorite(authToken, Number(announcementId));
+    console.log(isFavorite)
+    return json({ success: true, isFavorite });
+  } catch (error) {
+    return json({ error: "Failure to change favorite" }, { status: 500 });
+  }
+}
 
 export default function AnnouncementDetailsPage() {
   const { announcement, announcementesAll } = useLoaderData<typeof loader>();

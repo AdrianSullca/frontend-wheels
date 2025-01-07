@@ -40,3 +40,35 @@ export async function uploadAnnouncement(
     );
   }
 }
+
+export async function getAnnouncementById(
+  authToken: string,
+  announcementId: number
+) {
+  try {
+    const response = await axios.get(
+      `http://localhost:8000/api/announcements/${announcementId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${authToken}`,
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        withCredentials: true,
+      }
+    );
+
+    return response.data.announcement;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+
+    const errorMessage =
+      (axiosError.response?.data as { message?: string })?.message ||
+      "An unexpected error occurred.";
+
+    return json(
+      { unexpectedError: { message: errorMessage } },
+      { status: axiosError.response?.status || 500 }
+    );
+  }
+}

@@ -31,6 +31,7 @@ export interface Announcement {
   state?: string | undefined;
   created_at?: string;
   updated_at?: string;
+  isFavorite?: boolean
 }
 
 export interface Review {
@@ -65,4 +66,12 @@ export interface Stats {
 export interface UserInfo {
   user: User;
   stats: Stats;
+}
+
+export interface Favorite {
+  id: number;
+  user_id: number;
+  announcement_id: number;
+  created_at: string;
+  updated_at: string;
 }
