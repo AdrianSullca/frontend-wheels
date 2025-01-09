@@ -1,9 +1,11 @@
 import { Announcement, User } from "../../types/interfaces";
-import { Carousel } from "flowbite-react";
 import { Link, useFetcher } from "@remix-run/react";
 import { formatDate } from "../../utils/helpers";
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { Button, Modal, Carousel } from "flowbite-react";
+import { HiOutlineExclamationCircle } from "react-icons/hi";
+
 interface AnnouncementDetailsProps {
   announcement: Announcement;
   userAuth: User;
@@ -20,9 +22,11 @@ export default function AnnouncementDetails({
   userAuth,
 }: AnnouncementDetailsProps) {
   const fetcher = useFetcher();
+  const fetcherDelete = useFetcher();
   const [isFavorite, setIsFavorite] = useState(
     announcement.isFavorite || false
   );
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     if (fetcher.data && (fetcher.data as FetcherData).success) {
@@ -40,6 +44,16 @@ export default function AnnouncementDetails({
     );
   };
 
+  const handleDelete = () => {
+    fetcherDelete.submit(
+      { announcementId: announcement.id },
+      {
+        method: "DELETE",
+        action: `/announcements/${announcement.id}/details`,
+      }
+    );
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0 }}
@@ -52,30 +66,90 @@ export default function AnnouncementDetails({
       <div className="flex justify-between items-center pb-5">
         <h1 className="text-2xl font-bold">{announcement.title}</h1>
         {announcement.user_id == userAuth.id ? (
-          <Link
-            to={`/announcements/${announcement.id}/update`}
-            className={`flex gap-2 p-1 px-3 rounded-md border transition-all duration-300`}
-          >
-            <svg
-              className="w-6 h-6 text-gray-800 dark:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              width="24"
-              height="24"
-              fill="none"
-              viewBox="0 0 24 24"
+          <div className="flex gap-2">
+            <Link
+              to={`/announcements/${announcement.id}/update`}
+              className={`flex gap-2 p-1 px-3 rounded-md border transition-all duration-300`}
             >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
-              />
-            </svg>
+              <svg
+                className="w-6 h-6 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+                />
+              </svg>
+              <span>Edit announcement</span>
+            </Link>
 
-            <span>Edit announcement</span>
-          </Link>
+            <button
+              onClick={() => setOpenModal(true)}
+              className={`flex gap-2 p-1 px-3 rounded-md border transition-all duration-300`}
+              disabled={fetcherDelete.state === "submitting"}
+            >
+              <svg
+                className="w-6 h-6 text-gray-800 dark:text-white"
+                aria-hidden="true"
+                xmlns="http://www.w3.org/2000/svg"
+                width="24"
+                height="24"
+                fill="none"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  stroke="currentColor"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  d="M5 7h14m-9 3v8m4-8v8M10 3h4a1 1 0 0 1 1 1v3H9V4a1 1 0 0 1 1-1ZM6 7h12v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7Z"
+                />
+              </svg>
+              <span>
+                {fetcherDelete.state === "submitting"
+                  ? "Deleting..."
+                  : "Delete"}
+              </span>
+            </button>
+            <Modal
+              show={openModal}
+              size="md"
+              onClose={() => setOpenModal(false)}
+              popup
+            >
+              <Modal.Header />
+              <Modal.Body>
+                <div className="text-center">
+                  <HiOutlineExclamationCircle className="mx-auto mb-4 h-14 w-14 text-gray-400 dark:text-gray-200" />
+                  <h3 className="mb-5 text-lg font-normal text-gray-500 dark:text-gray-400">
+                    Are you sure you want to delete this announcement?
+                  </h3>
+                  <div className="flex justify-center gap-4">
+                    <Button
+                      color="failure"
+                      onClick={() => {
+                        handleDelete();
+                        setOpenModal(false);
+                      }}
+                    >
+                      {"Yes, I'm sure"}
+                    </Button>
+                    <Button color="gray" onClick={() => setOpenModal(false)}>
+                      No, cancel
+                    </Button>
+                  </div>
+                </div>
+              </Modal.Body>
+            </Modal>
+          </div>
         ) : (
           <button
             onClick={handleToggleFavorite}

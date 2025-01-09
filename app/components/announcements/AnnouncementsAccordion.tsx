@@ -71,7 +71,7 @@ export default function AnnouncementsAccordion({
             ))
           ) : (
             <p className="text-center col-start-1 col-end-2 sm:col-end-3 md:col-end-4 pb-4">
-              The user has not published any advertisement
+              No announcements published
             </p>
           )}
 

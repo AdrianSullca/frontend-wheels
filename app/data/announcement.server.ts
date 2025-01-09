@@ -1,5 +1,7 @@
 import { json } from "@remix-run/react";
 import axios, { AxiosError } from "axios";
+import { Announcement, User } from "../types/interfaces";
+import { getUserAnnouncements } from "./user.server";
 
 export async function uploadAnnouncement(
   authToken: string,
@@ -58,18 +60,20 @@ export async function getAnnouncementById(
       }
     );
 
+    if (!response.data.announcement) {
+      console.log("Entramos bloque 2");
+      throw new Error("Announcement not found");
+    }
+
     return response.data.announcement;
   } catch (error) {
     const axiosError = error as AxiosError;
 
     const errorMessage =
       (axiosError.response?.data as { message?: string })?.message ||
-      "An unexpected error occurred.";
-
-    return json(
-      { unexpectedError: { message: errorMessage } },
-      { status: axiosError.response?.status || 500 }
-    );
+      "An unexpected error occurred while fetching the announcement.";
+    console.log("bloque 3");
+    throw new Error(errorMessage);
   }
 }
 
@@ -113,7 +117,7 @@ export async function updateAnnouncement(
       );
     }
 
-    return response
+    return response;
   } catch (error) {
     const axiosError = error as AxiosError;
 
@@ -164,9 +168,47 @@ export function validateErrorsFormAnnouncementUpdate(formData: FormData) {
     (file) => file instanceof File && file.size > 0 && file.name !== ""
   );
 
-  if (!oldPhotos || oldPhotos === "[]" && !hasValidNewPhotos) {
+  if (!oldPhotos || (oldPhotos === "[]" && !hasValidNewPhotos)) {
     errors.photos = "At least one photo is required";
   }
 
   return errors;
+}
+
+export async function deleteAnnouncement(
+  authToken: string,
+  announcementId: number,
+  authUser: User
+) {
+  const userAnnouncements = await getUserAnnouncements(authToken, authUser.id);
+  const announcementIds = userAnnouncements.map(
+    (announcement: Announcement) => announcement.id
+  );
+
+  if (!announcementIds.includes(announcementId)) {
+    throw new Error("You don't have permission to delete this announcement");
+  }
+
+  try {
+    const response = await axios.delete(
+      `http://localhost:8000/api/announcements/${announcementId}`,
+      {
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+          Authorization: `Bearer ${authToken}`,
+        },
+        withCredentials: true,
+      }
+    );
+
+    return response.status;
+  } catch (error) {
+    const axiosError = error as AxiosError;
+    const errorMessage =
+      (axiosError.response?.data as { message?: string })?.message ||
+      "An unexpected error occurred while deleting the announcement.";
+
+    throw new Error(errorMessage);
+  }
 }
