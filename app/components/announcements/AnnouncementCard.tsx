@@ -14,7 +14,9 @@ export default function AnnouncementCard({
       <div className="aspect-square overflow-hidden rounded-xl relative group">
         <Carousel
           slide={false}
-          className="h-full"
+          className={`h-full ${
+            announcement.state === "inactive" ? "brightness-50" : ""
+          }`}
           indicators={false}
           leftControl={<ChevronLeft />}
           rightControl={<ChevronRight />}
@@ -44,6 +46,12 @@ export default function AnnouncementCard({
             </div>
           )}
         </Carousel>
+
+        {announcement.state === "inactive" && (
+          <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-90 transition-opacity duration-200">
+            <p className="text-white text-sm font-bold uppercase">Inactive</p>
+          </div>
+        )}
       </div>
 
       <Link

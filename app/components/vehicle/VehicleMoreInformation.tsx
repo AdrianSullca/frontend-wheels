@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { Model } from "../../types/interfaces";
 
 interface VehicleMoreInformationStepProps {
   formData: {
@@ -16,11 +17,6 @@ interface VehicleMoreInformationStepProps {
       HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement
     >
   ) => void;
-}
-
-interface Model {
-  Model_ID: number;
-  Model_Name: string;
 }
 
 export function VehicleMoreInformation({

@@ -1,8 +1,7 @@
 import { ActionFunctionArgs, json, LoaderFunction } from "@remix-run/node";
 import AnnouncementForm from "../components/announcements/AnnouncementForm";
 import { requireAuth } from "../data/auth.server";
-import { uploadAnnouncement } from "../data/announcement.server";
-import axios from "axios";
+import { getBrands, uploadAnnouncement } from "../data/announcement.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Comprobar si el usuario está autenticado
@@ -56,16 +55,3 @@ export default function UploadPage() {
     </div>
   );
 }
-
-export const getBrands = async () => {
-  // Obtener las marcas de vehiculos
-  const responseBrands = await axios.get(
-    "https://vpic.nhtsa.dot.gov/api/vehicles/GetMakesForVehicleType/car?format=json"
-  );
-  const brandsData = responseBrands.data.Results.slice(0, 31); // Obtener solo los 31 primeros
-  // Mapear las marcas por su nombre
-  const brands = brandsData.map(
-    (brand: { MakeName: string }) => brand.MakeName
-  );
-  return brands; // Devolver las marcas
-};

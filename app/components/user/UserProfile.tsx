@@ -1,9 +1,10 @@
-import { Announcement, Review, UserInfo } from "../../types/interfaces";
+import { Announcement, Review, User, UserInfo } from "../../types/interfaces";
 import AnnouncementAccordion from "../announcements/AnnouncementsAccordion";
 import ReviewAccordion from "../reviews/ReviewAccordion";
 
 interface UserProfileProps {
   announcements: Announcement[];
+  authUser: User;
   userInfo: UserInfo;
   reviews: Review[];
 }
@@ -12,6 +13,7 @@ import { motion } from "framer-motion";
 
 export default function UserProfile({
   userInfo,
+  authUser,
   announcements,
   reviews,
 }: UserProfileProps) {
@@ -54,14 +56,18 @@ export default function UserProfile({
                 </div>
               </div>
             </div>
-            <div className="w-full space-y-2">
-              <button className="shadow-md py-1 w-full border border-custom-gray rounded-md text-custom-gray hover:border-custom-gray-hover hover:text-custom-gray-hover transition-all duration-300">
-                <p>Send a message</p>
-              </button>
-              <button className="shadow-md py-1 w-full border border-custom-gray rounded-md text-custom-gray hover:border-custom-gray-hover hover:text-custom-gray-hover transition-all duration-300">
-                <p>Leave a review</p>
-              </button>
-            </div>
+            {userInfo.user.id === authUser.id ? (
+              ""
+            ) : (
+              <div className="w-full space-y-2">
+                <button className="shadow-md py-1 w-full border border-custom-gray rounded-md text-custom-gray hover:border-custom-gray-hover hover:text-custom-gray-hover transition-all duration-300">
+                  <p>Send a message</p>
+                </button>
+                <button className="shadow-md py-1 w-full border border-custom-gray rounded-md text-custom-gray hover:border-custom-gray-hover hover:text-custom-gray-hover transition-all duration-300">
+                  <p>Leave a review</p>
+                </button>
+              </div>
+            )}
           </div>
         </div>
         <div className="col-start-1 col-end-2 md:col-start-2 md:col-end-3 flex flex-col gap-6 md:mt-6">

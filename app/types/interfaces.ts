@@ -23,6 +23,7 @@ export interface Announcement {
   brand?: string | undefined;
   model?: string | undefined;
   year?: string | undefined;
+  vehicleType?: string | undefined;
   photoUrls: string[];
   user: {
     created_at: string;
@@ -31,7 +32,7 @@ export interface Announcement {
   state?: string | undefined;
   created_at?: string;
   updated_at?: string;
-  isFavorite?: boolean
+  isFavorite?: boolean;
 }
 
 export interface Review {
@@ -74,4 +75,9 @@ export interface Favorite {
   announcement_id: number;
   created_at: string;
   updated_at: string;
+}
+
+export interface Model {
+  Model_ID: number;
+  Model_Name: string;
 }

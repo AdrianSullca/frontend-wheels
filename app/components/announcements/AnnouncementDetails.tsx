@@ -1,4 +1,4 @@
-import { Announcement } from "../../types/interfaces";
+import { Announcement, User } from "../../types/interfaces";
 import { Carousel } from "flowbite-react";
 import { Link, useFetcher } from "@remix-run/react";
 import { formatDate } from "../../utils/helpers";
@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 interface AnnouncementDetailsProps {
   announcement: Announcement;
+  userAuth: User;
   sameBrandAnnouncements: Announcement[];
 }
 
@@ -16,6 +17,7 @@ interface FetcherData {
 
 export default function AnnouncementDetails({
   announcement,
+  userAuth,
 }: AnnouncementDetailsProps) {
   const fetcher = useFetcher();
   const [isFavorite, setIsFavorite] = useState(
@@ -49,26 +51,52 @@ export default function AnnouncementDetails({
     >
       <div className="flex justify-between items-center pb-5">
         <h1 className="text-2xl font-bold">{announcement.title}</h1>
-
-        <button
-          onClick={handleToggleFavorite}
-          className={`flex gap-2 p-1 px-3 rounded-md border transition-all duration-300 ${
-            isFavorite ? "bg-gray-200" : "hover:bg-gray-200"
-          }`}
-        >
-          <svg
-            fill={isFavorite ? "red" : "none"}
-            stroke={isFavorite ? "red" : "black"}
-            width="24"
-            height="24"
-            strokeWidth="1.4"
-            viewBox="0 0 24 24"
-            xmlns="http://www.w3.org/2000/svg"
+        {announcement.user_id == userAuth.id ? (
+          <Link
+            to={`/announcements/${announcement.id}/update`}
+            className={`flex gap-2 p-1 px-3 rounded-md border transition-all duration-300`}
           >
-            <path d="M12 20a1 1 0 0 1-.437-.1C11.214 19.73 3 15.671 3 9a5 5 0 0 1 8.535-3.536l.465.465.465-.465A5 5 0 0 1 21 9c0 6.646-8.212 10.728-8.562 10.9A1 1 0 0 1 12 20z" />
-          </svg>
-          <span>{isFavorite ? "Remove favorite" : "Save as favorite"}</span>
-        </button>
+            <svg
+              className="w-6 h-6 text-gray-800 dark:text-white"
+              aria-hidden="true"
+              xmlns="http://www.w3.org/2000/svg"
+              width="24"
+              height="24"
+              fill="none"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke="currentColor"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
+                d="m14.304 4.844 2.852 2.852M7 7H4a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-4.5m2.409-9.91a2.017 2.017 0 0 1 0 2.853l-6.844 6.844L8 14l.713-3.565 6.844-6.844a2.015 2.015 0 0 1 2.852 0Z"
+              />
+            </svg>
+
+            <span>Edit announcement</span>
+          </Link>
+        ) : (
+          <button
+            onClick={handleToggleFavorite}
+            className={`flex gap-2 p-1 px-3 rounded-md border transition-all duration-300 ${
+              isFavorite ? "bg-gray-200" : "hover:bg-gray-200"
+            }`}
+          >
+            <svg
+              fill={isFavorite ? "red" : "none"}
+              stroke={isFavorite ? "red" : "black"}
+              width="24"
+              height="24"
+              strokeWidth="1.4"
+              viewBox="0 0 24 24"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path d="M12 20a1 1 0 0 1-.437-.1C11.214 19.73 3 15.671 3 9a5 5 0 0 1 8.535-3.536l.465.465.465-.465A5 5 0 0 1 21 9c0 6.646-8.212 10.728-8.562 10.9A1 1 0 0 1 12 20z" />
+            </svg>
+            <span>{isFavorite ? "Remove favorite" : "Save as favorite"}</span>
+          </button>
+        )}
       </div>
       <div className="aspect-[16/9] overflow-hidden rounded-xl relative group max-h-[450px]">
         <Carousel
@@ -111,7 +139,10 @@ export default function AnnouncementDetails({
               />
               <div>
                 <p className="text-black">
-                  Annunciator: {announcement.user.name}
+                  Annunciator:{" "}
+                  {announcement.user_id == userAuth.id
+                    ? "You"
+                    : announcement.user.name}
                 </p>
                 <p className="text-sm text-gray-500">
                   Registered on {formatDate(announcement.user.created_at)}
@@ -200,10 +231,26 @@ export default function AnnouncementDetails({
               </div>
             </div>
             <div className="mt-6 space-y-3">
-              <button className="border border-gray-300 py-2 px-4 text-black w-full rounded-lg shadow-sm  hover:text-custom-gray-hover transition-all transition duration-300">
+              <button
+                disabled={announcement.user_id == userAuth.id}
+                className={`border border-gray-300 py-2 px-4 w-full rounded-lg shadow-sm text-black 
+    transition-all duration-300 ${
+      announcement.user_id == userAuth.id
+        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+        : "hover:text-custom-gray-hover"
+    }`}
+              >
                 Send a message
               </button>
-              <button className="bg-custom-orange  py-2 px-4 text-white w-full rounded-lg shadow-md hover:bg-custom-orange-hover transition-all transition duration-300">
+              <button
+                disabled={announcement.user_id == userAuth.id}
+                className={`py-2 px-4 w-full rounded-lg shadow-md text-white 
+    transition-all duration-300 ${
+      announcement.user_id == userAuth.id
+        ? "bg-gray-300 text-gray-400 cursor-not-allowed"
+        : "bg-custom-orange hover:bg-custom-orange-hover"
+    }`}
+              >
                 Buy now
               </button>
             </div>
