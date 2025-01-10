@@ -206,8 +206,8 @@ export default function AnnouncementDetails({
           <Link className="w-full" to={`/user/${announcement.user_id}/profile`}>
             <div className="flex items-center gap-4 bg-white px-6 py-4 w-full rounded-lg shadow-sm">
               <img
-                src="https://flowbite.com/docs/images/carousel/carousel-2.svg"
-                alt="..."
+                src={announcement.user.profile_picture_path}
+                alt="user avatar"
                 width="35"
                 className="rounded-full"
               />

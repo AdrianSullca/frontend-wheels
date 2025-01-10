@@ -28,6 +28,7 @@ export interface Announcement {
   user: {
     created_at: string;
     name: string;
+    profile_picture_path: string;
   };
   state?: string | undefined;
   created_at?: string;

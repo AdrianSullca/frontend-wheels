@@ -31,10 +31,9 @@ export default function UserProfile({
           <div className="max-w-[800px] sticky top-20 space-y-4">
             <div className="flex flex-col items-center text-black gap-4 bg-white px-6 py-6 w-full rounded-lg shadow-md">
               <img
-                src="https://flowbite.com/docs/images/carousel/carousel-2.svg"
-                alt="..."
-                width="100"
-                className="rounded-full"
+                src={userInfo.user.profile_picture_path}
+                alt="user avatar"
+                className="rounded-full object-contain w-[140px] h-[140px]"
               />
               <div className="text-center">
                 <p className="text-2xl font-medium">{userInfo.user.name}</p>

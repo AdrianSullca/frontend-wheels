@@ -110,9 +110,11 @@ export default function AuthHeader({ user }: AuthHeaderProps) {
                 <Dropdown.Item icon={TransactionsIcon}>
                   <span className="ml-1">Transactions</span>
                 </Dropdown.Item>
-                <Dropdown.Item icon={SettingsIcon}>
-                  <span className="ml-1">Settings</span>
-                </Dropdown.Item>
+                <Link to={"/user/settings"}>
+                  <Dropdown.Item icon={SettingsIcon}>
+                    <span className="ml-1">Settings</span>
+                  </Dropdown.Item>
+                </Link>
                 <Dropdown.Divider />
                 <Link to="/logout">
                   <Dropdown.Item icon={LogoutIcon}>
