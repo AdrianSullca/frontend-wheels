@@ -1,7 +1,9 @@
 import { Announcement, Review, User, UserInfo } from "../../types/interfaces";
 import AnnouncementAccordion from "../announcements/AnnouncementsAccordion";
+import { useFetcher } from "@remix-run/react";
 import ReviewAccordion from "../reviews/ReviewAccordion";
-
+import { useState } from "react";
+import { Button, Modal, Rating } from "flowbite-react";
 interface UserProfileProps {
   announcements: Announcement[];
   authUser: User;
@@ -11,12 +13,39 @@ interface UserProfileProps {
 
 import { motion } from "framer-motion";
 
+interface ActionData {
+  errors?: {
+    [key: string]: string | undefined;
+  };
+  message?: string;
+}
+
 export default function UserProfile({
   userInfo,
   authUser,
   announcements,
   reviews,
 }: UserProfileProps) {
+  
+  const fetcher = useFetcher<ActionData>();
+  const [openModal, setOpenModal] = useState(false);
+  const [rating, setRating] = useState(1);
+  const [hoverRating, setHoverRating] = useState(1);
+  const [comment, setComment] = useState("");
+
+  const handleAddReview = () => {
+    fetcher.submit(
+      { userId: userInfo.user.id, rating: rating.toString(), comment },
+      {
+        method: "POST",
+        action: `/user/${userInfo.user.id}/profile`,
+      }
+    );
+    setRating(1);
+    setComment("");
+    setOpenModal(false);
+  };
+
   return (
     <div className="max-w-[1400px] mx-auto text-black px-10">
       <motion.div
@@ -62,10 +91,79 @@ export default function UserProfile({
                 <button className="shadow-md py-1 w-full border border-custom-gray rounded-md text-custom-gray hover:border-custom-gray-hover hover:text-custom-gray-hover transition-all duration-300">
                   <p>Send a message</p>
                 </button>
-                <button className="shadow-md py-1 w-full border border-custom-gray rounded-md text-custom-gray hover:border-custom-gray-hover hover:text-custom-gray-hover transition-all duration-300">
+                <button
+                  onClick={() => setOpenModal(true)}
+                  className="shadow-md py-1 w-full border border-custom-gray rounded-md text-custom-gray hover:border-custom-gray-hover hover:text-custom-gray-hover transition-all duration-300"
+                >
                   <p>Leave a review</p>
                 </button>
+                <Modal
+                  show={openModal}
+                  size="md"
+                  onClose={() => setOpenModal(false)}
+                  popup
+                >
+                  <Modal.Header />
+                  <Modal.Body>
+                    <div className="text-center">
+                      <h3 className="mb-4 text-lg font-medium text-gray-700">
+                        Leave a Review
+                      </h3>
+
+                      <div className="flex justify-center gap-1 mb-4">
+                        <Rating>
+                          {Array.from({ length: 5 }, (_, index) => {
+                            const starValue = index + 1;
+                            return (
+                              <Rating.Star
+                                key={index}
+                                className={`cursor-pointer ${
+                                  starValue <= (hoverRating || rating || 1)
+                                    ? "text-custom-gray"
+                                    : "text-gray-300"
+                                }`}
+                                onClick={() => setRating(starValue)}
+                                onMouseEnter={() => setHoverRating(starValue)}
+                                onMouseLeave={() => setHoverRating(0)}
+                              />
+                            );
+                          })}
+                        </Rating>
+                      </div>
+
+                      <textarea
+                        name="comment"
+                        rows={3}
+                        className="w-full border border-gray-300 rounded-lg focus:ring-0 focus:border-gray-400 text-black"
+                        placeholder="Write your review here..."
+                        value={comment}
+                        onChange={(e) => setComment(e.target.value)}
+                      />
+
+                      <div className="flex justify-center gap-4 mt-4">
+                        <Button
+                          color="success"
+                          onClick={handleAddReview}
+                          disabled={
+                            rating === 0 || rating > 5 || comment.trim() === ""
+                          }
+                        >
+                          Add Review
+                        </Button>
+                        <Button
+                          color="gray"
+                          onClick={() => setOpenModal(false)}
+                        >
+                          Cancel
+                        </Button>
+                      </div>
+                    </div>
+                  </Modal.Body>
+                </Modal>
               </div>
+            )}
+            {fetcher.data?.message && (
+              <p className="text-green-500">{fetcher.data.message}</p>
             )}
           </div>
         </div>
