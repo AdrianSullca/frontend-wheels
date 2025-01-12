@@ -97,9 +97,7 @@ export function ErrorBoundary() {
     return (
       <div className="flex items-center justify-center min-h-screen bg-custom-body">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-black">
-            {error.status}
-          </h1>
+          <h1 className="text-2xl font-bold text-black">{error.status}</h1>
           <p className="text-black">{error.data}</p>
         </div>
       </div>

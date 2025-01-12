@@ -40,6 +40,7 @@ export interface Review {
   id: number;
   rating: string;
   valuator: User;
+  rated_user: User;
   rated_user_id: 2;
   comment: string;
   created_at: string;
