@@ -27,9 +27,16 @@ export const sessionStorage = createCookieSessionStorage({
   },
 });
 
-async function createUserSession(authToken: string) {
+async function createUserSession(authToken: string, admin: boolean) {
   const session = await sessionStorage.getSession();
   session.set("authToken", authToken);
+  if (admin) {
+    return redirect("/manage/users", {
+      headers: {
+        "Set-Cookie": await sessionStorage.commitSession(session),
+      },
+    });
+  }
 
   return redirect("/announcements", {
     headers: {
@@ -52,7 +59,8 @@ export async function login({ email, password }: LoginFormData) {
       }
     );
     if (response.status === 200) {
-      return await createUserSession(response.data.token);
+      const admin = Boolean(response.data.user.admin);
+      return await createUserSession(response.data.token, admin);
     }
   } catch (error) {
     if (isAxiosError(error) && error.response) {

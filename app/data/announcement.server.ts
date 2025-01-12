@@ -61,7 +61,6 @@ export async function getAnnouncementById(
     );
 
     if (!response.data.announcement) {
-      console.log("Entramos bloque 2");
       throw new Error("Announcement not found");
     }
 
@@ -72,7 +71,6 @@ export async function getAnnouncementById(
     const errorMessage =
       (axiosError.response?.data as { message?: string })?.message ||
       "An unexpected error occurred while fetching the announcement.";
-    console.log("bloque 3");
     throw new Error(errorMessage);
   }
 }
