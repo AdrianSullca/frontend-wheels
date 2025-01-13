@@ -1,8 +1,15 @@
-import { ActionFunctionArgs, json, LoaderFunction } from "@remix-run/node";
+import { ActionFunctionArgs, json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import ReviewsList from "../components/reviews/ReviewsList";
 import { getUserByToken, requireAuth } from "../data/auth.server";
 import { getAllReviews, deleteReview } from "../data/admin.server";
 import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Manage reviews" },
+    { name: "description", content: "Review management view" },
+  ];
+};
 
 export const loader: LoaderFunction = async ({ request }) => {
   const authToken = await requireAuth(request);

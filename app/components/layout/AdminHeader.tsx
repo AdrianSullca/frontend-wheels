@@ -22,11 +22,6 @@ export default function AdminHeader({ user }: AuthHeaderProps) {
               </Link>
             </li>
             <li className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md hidden sm:block">
-              <Link to="/manage/announcements">
-                <span className="text-black px-3">Manage announcements</span>
-              </Link>
-            </li>
-            <li className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md hidden sm:block">
               <Link to="/manage/reviews">
                 <span className="text-black px-3">Manage reviews</span>
               </Link>

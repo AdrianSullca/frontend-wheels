@@ -26,7 +26,7 @@ export default function AnnouncementCard({
               <div key={index} className="relative h-full w-full">
                 <Link
                   to={`/announcements/${announcement.id}/details`}
-                  className="h-full w-full"
+                  className="h-full w-full block"
                 >
                   <img
                     src={url}
@@ -72,7 +72,7 @@ export default function AnnouncementCard({
 
 function ChevronLeft() {
   return (
-    <button className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+    <div className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -86,13 +86,13 @@ function ChevronLeft() {
       >
         <path d="M15 6l-6 6l6 6"></path>{" "}
       </svg>
-    </button>
+    </div>
   );
 }
 
 function ChevronRight() {
   return (
-    <button className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity">
+    <div className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 rounded-full p-2 opacity-0 group-hover:opacity-100 transition-opacity">
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
@@ -106,6 +106,6 @@ function ChevronRight() {
       >
         <path d="M9 18l6-6-6-6"></path>{" "}
       </svg>
-    </button>
+    </div>
   );
 }

@@ -2,6 +2,14 @@ import { ActionFunctionArgs, json, LoaderFunction } from "@remix-run/node";
 import Settings from "../components/user/Settings";
 import { getUserByToken, requireAuth } from "../data/auth.server";
 import { updateUserInformation, updateUserSecurity } from "../data/user.server";
+import { MetaFunction } from "@remix-run/react";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Settings" },
+    { name: "description", content: "User data settings view" },
+  ];
+};
 
 export async function action({ request }: ActionFunctionArgs) {
   const authToken = await requireAuth(request);

@@ -24,7 +24,7 @@ export default function AuthHeader({ user }: AuthHeaderProps) {
         <nav>
           <ul className="flex gap-1">
             <li className="pr-3 hidden sm:block">
-              <Link to="/announcements/upload">
+              <Link to="/announcements/upload" aria-label="Sell">
                 <button className="text-white flex items-center space-x-2 border border-custom-gray bg-custom-gray px-4 py-1 rounded-lg transition-all duration-300 hover:bg-custom-gray-hover hover:border-custom-gray-hover transition-colors">
                   <svg
                     xmlns="http://www.w3.org/2000/svg"
@@ -43,8 +43,12 @@ export default function AuthHeader({ user }: AuthHeaderProps) {
                 </button>
               </Link>
             </li>
-            <li className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md hidden sm:block">
-              <Link to="/user/favorites">
+            <li className="hidden sm:block">
+              <Link
+                to="/user/favorites"
+                aria-label="Favorites List"
+                className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md inline-block"
+              >
                 <svg
                   fill="none"
                   stroke="black"
@@ -58,43 +62,53 @@ export default function AuthHeader({ user }: AuthHeaderProps) {
                 </svg>
               </Link>
             </li>
-            <li className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md hidden sm:block">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="none"
-                stroke="black"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                width="24"
-                height="24"
-                strokeWidth="1.4"
+            <li className="hidden sm:block">
+              <button
+                aria-label="Chats"
+                className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md inline-block"
               >
-                <path d="M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1"></path>
-              </svg>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="black"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  width="24"
+                  height="24"
+                  strokeWidth="1.4"
+                >
+                  <path d="M3 20l1.3 -3.9c-2.324 -3.437 -1.426 -7.872 2.1 -10.374c3.526 -2.501 8.59 -2.296 11.845 .48c3.255 2.777 3.695 7.266 1.029 10.501c-2.666 3.235 -7.615 4.215 -11.574 2.293l-4.7 1"></path>
+                </svg>
+              </button>
             </li>
-            <li className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md hidden sm:block">
+            <li className="hidden sm:block">
               <Dropdown
                 arrowIcon={false}
                 inline
                 label={
-                  <svg
-                    className="w-[25px] h-[25px] text-gray-800 dark:text-white"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    width="26"
-                    height="26"
-                    fill="none"
-                    viewBox="0 0 24 24"
+                  <div
+                    className="hover:bg-gray-100 dark:hover:bg-gray-800 p-1 rounded-md inline-block"
+                    aria-label="User menu"
                   >
-                    <path
-                      stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="1.5"
-                      d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
-                    />
-                  </svg>
+                    <svg
+                      className="w-[25px] h-[25px] text-gray-800 dark:text-white"
+                      aria-hidden="true"
+                      xmlns="http://www.w3.org/2000/svg"
+                      width="26"
+                      height="26"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        stroke="currentColor"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth="1.5"
+                        d="M12 21a9 9 0 1 0 0-18 9 9 0 0 0 0 18Zm0 0a8.949 8.949 0 0 0 4.951-1.488A3.987 3.987 0 0 0 13 16h-2a3.987 3.987 0 0 0-3.951 3.512A8.948 8.948 0 0 0 12 21Zm3-11a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z"
+                      />
+                    </svg>
+                  </div>
                 }
               >
                 <Dropdown.Header>

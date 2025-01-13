@@ -1,4 +1,9 @@
-import { ActionFunctionArgs, LoaderFunction, json } from "@remix-run/node";
+import {
+  ActionFunctionArgs,
+  LoaderFunction,
+  MetaFunction,
+  json,
+} from "@remix-run/node";
 import {
   redirect,
   useLoaderData,
@@ -12,6 +17,13 @@ import {
   deleteAnnouncement,
 } from "../data/announcement.server";
 import { toggleFavorite } from "../data/favorites.server";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Announcement details" },
+    { name: "description", content: "View announcement details" },
+  ];
+};
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   try {

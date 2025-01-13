@@ -80,7 +80,7 @@ export const TextLogoWheelsLink: React.FC = () => {
     return (
       <Link to="/announcements">
         <img
-          src="../../../public/wheels-text-logo.png"
+          src="/wheels-text-logo.png"
           alt="Logo"
           className="w-32 h-auto"
         />

@@ -59,13 +59,6 @@ export default function HamburgerMenuAdmin() {
           >
             <li className="text-black">Manage users</li>
           </Link>
-          <Link
-            to={`/manage/announcements`}
-            onClick={toggleMenu}
-            className="hover:bg-gray-100 text-center w-full py-3 transition duration-200"
-          >
-            <li className="text-black">Manage announcements</li>
-          </Link>
 
           <Link
             to={`/manage/reviews`}

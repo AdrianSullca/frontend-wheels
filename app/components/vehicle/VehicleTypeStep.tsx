@@ -26,7 +26,7 @@ export function VehicleTypeStep({ formData, onChange }: VehicleTypeStepProps) {
               className="hidden"
             />
             <img
-              src="../../../public/sport-icon.png"
+              src="/sport-icon.png"
               alt="Sport"
               className="w-full object-contain h-[200px] mb-2"
             />
@@ -52,7 +52,7 @@ export function VehicleTypeStep({ formData, onChange }: VehicleTypeStepProps) {
               className="hidden"
             />
             <img
-              src="../../../public/sedan-icon.png"
+              src="/sedan-icon.png"
               alt="Sedan"
               className="w-full h-[200px] object-contain mb-2"
             />
@@ -78,7 +78,7 @@ export function VehicleTypeStep({ formData, onChange }: VehicleTypeStepProps) {
               className="hidden"
             />
             <img
-              src="../../../public/van-icon.png"
+              src="/van-icon.png"
               alt="Van"
               className="w-full object-contain h-[200px] mb-2"
             />
@@ -104,7 +104,7 @@ export function VehicleTypeStep({ formData, onChange }: VehicleTypeStepProps) {
               className="hidden"
             />
             <img
-              src="../../../public/other-icon.png"
+              src="/other-icon.png"
               alt="Other"
               className="w-full object-contain h-[200px] mb-2"
             />

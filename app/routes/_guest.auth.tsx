@@ -1,11 +1,21 @@
 import { json, redirect, useSearchParams } from "@remix-run/react";
-import { ActionFunctionArgs, LoaderFunction } from "@remix-run/node";
+import {
+  ActionFunctionArgs,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import LoginForm from "../components/auth/LoginForm";
 import RegisterForm from "../components/auth/RegisterForm";
 import { validateRegisterFormData } from "../data/validations.server";
 import { login, register, sessionStorage } from "../data/auth.server";
 import { LoginFormData, RegisterFormData } from "../types/interfaces";
 
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Auth form" },
+    { name: "description", content: "Registration or login form view" },
+  ];
+};
 
 export const loader: LoaderFunction = async ({ request }) => {
   const session = await sessionStorage.getSession(
@@ -59,7 +69,7 @@ export default function AuthPage() {
         </div>
         <div className="w-full justify-center my-20 hidden lg:flex">
           <img
-            src="../../public/wheels-logo.png"
+            src="/wheels-logo.png"
             alt="free-wheels-logo"
             className="w-[400px] h-[400px] object-contain"
           />

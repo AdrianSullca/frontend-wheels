@@ -1,8 +1,15 @@
-import { ActionFunctionArgs, json, LoaderFunction } from "@remix-run/node";
+import { ActionFunctionArgs, json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import UsersList from "../components/user/UsersList";
 import { getUserByToken, requireAuth } from "../data/auth.server";
 import { deleteUser, getAllUsers, updateUser, createUser } from "../data/admin.server";
 import { isRouteErrorResponse, useRouteError } from "@remix-run/react";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Manage users" },
+    { name: "description", content: "User management view" },
+  ];
+};
 
 export const loader: LoaderFunction = async ({ request }) => {
   const authToken = await requireAuth(request);

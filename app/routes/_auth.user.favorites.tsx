@@ -1,8 +1,15 @@
-import { ActionFunctionArgs, json, LoaderFunction } from "@remix-run/node";
+import { ActionFunctionArgs, json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { requireAuth } from "../data/auth.server";
 import { useLoaderData } from "@remix-run/react";
 import { getUserFavorites, toggleFavorite } from "../data/favorites.server";
 import FavoritesList from "../components/favorites/FavoritesList";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Favorites list" },
+    { name: "description", content: "User favorites list" },
+  ];
+};
 
 export const loader: LoaderFunction = async ({ request }) => {
   const authToken = await requireAuth(request);

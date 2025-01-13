@@ -7,6 +7,14 @@ import {
 import AnnouncementForm from "../components/announcements/AnnouncementForm";
 import { getUserByToken, requireAuth } from "../data/auth.server";
 import { getBrands, uploadAnnouncement } from "../data/announcement.server";
+import { MetaFunction } from "@remix-run/react";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Upload announcement" },
+    { name: "description", content: "Form to upload an announcement" },
+  ];
+};
 
 export const loader: LoaderFunction = async ({ request }) => {
   // Comprobar si el usuario está autenticado

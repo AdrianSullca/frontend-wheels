@@ -1,4 +1,9 @@
-import { ActionFunctionArgs, json, LoaderFunction } from "@remix-run/node";
+import {
+  ActionFunctionArgs,
+  json,
+  LoaderFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import { getUserByToken, requireAuth } from "../data/auth.server";
 import AnnouncementFormUpdate from "../components/announcements/AnnouncementFormUpdate";
 import {
@@ -10,6 +15,13 @@ import {
 import { useLoaderData } from "@remix-run/react";
 import { getUserAnnouncements } from "../data/user.server";
 import { Announcement } from "../types/interfaces";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "Update announcement" },
+    { name: "description", content: "Form to update an announcement" },
+  ];
+};
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const authToken = await requireAuth(request);

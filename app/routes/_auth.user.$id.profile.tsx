@@ -1,4 +1,4 @@
-import { ActionFunctionArgs, json, LoaderFunction } from "@remix-run/node";
+import { ActionFunctionArgs, json, LoaderFunction, MetaFunction } from "@remix-run/node";
 import { getUserByToken, requireAuth } from "../data/auth.server";
 import { useLoaderData } from "@remix-run/react";
 import UserProfile from "../components/user/UserProfile";
@@ -8,6 +8,13 @@ import {
   getUserReviews,
 } from "../data/user.server";
 import { addReview, updateReview, deleteReview } from "../data/reviews.server";
+
+export const meta: MetaFunction = () => {
+  return [
+    { title: "User profile" },
+    { name: "description", content: "User profile view" },
+  ];
+};
 
 export const loader: LoaderFunction = async ({ params, request }) => {
   const authToken = await requireAuth(request);
