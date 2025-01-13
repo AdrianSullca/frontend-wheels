@@ -59,7 +59,7 @@ export default function ReviewCard({ review }: ReviewCardProps) {
       <div className="flex justify-between items-start gap-4">
         <div className="flex items-center gap-4">
           <img
-            src="https://flowbite.com/docs/images/carousel/carousel-2.svg"
+            src={review.valuator.profile_picture_path}
             alt="..."
             width="35"
             className="rounded-full"

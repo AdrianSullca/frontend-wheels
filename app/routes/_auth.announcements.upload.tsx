@@ -1,6 +1,11 @@
-import { ActionFunctionArgs, json, LoaderFunction } from "@remix-run/node";
+import {
+  ActionFunctionArgs,
+  json,
+  LoaderFunction,
+  redirect,
+} from "@remix-run/node";
 import AnnouncementForm from "../components/announcements/AnnouncementForm";
-import { requireAuth } from "../data/auth.server";
+import { getUserByToken, requireAuth } from "../data/auth.server";
 import { getBrands, uploadAnnouncement } from "../data/announcement.server";
 
 export const loader: LoaderFunction = async ({ request }) => {
@@ -38,9 +43,9 @@ export async function action({ request }: ActionFunctionArgs) {
         "Formulario enviado console log submit:",
         Object.fromEntries(formData)
       );
-      const result = await uploadAnnouncement(authToken, formData);
-      console.log(result);
-      return json(result);
+      await uploadAnnouncement(authToken, formData);
+      const authUser = await getUserByToken(request);
+      return redirect(`/user/${authUser.id}/profile`);
     }
 
     default:

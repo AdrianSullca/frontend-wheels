@@ -26,9 +26,7 @@ export async function getUserFavorites(authToken: string) {
           userId: favorite.user_id,
           announcement: {
             id: announcement.id,
-            // photoUrl: announcement.photoUrls[0],
-            photoUrl:
-              "https://res.cloudinary.com/dxvjedi2n/image/upload/v1735251175/announcement-1-2_d8xpmo.jpg",
+            photoUrl: announcement.photoUrls[0],
             title: announcement.title,
             user_name: announcement.user.name,
             user_id: announcement.user.id,

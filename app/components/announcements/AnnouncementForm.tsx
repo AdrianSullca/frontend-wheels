@@ -220,15 +220,17 @@ export default function AnnouncementForm() {
             name="action"
             value="submit"
             className={`shadow-sm px-5 py-2 rounded-xl transition-colors duration-300 ease-in-out px-3 ${
-              !isNextButtonDisabled()
-                ? "bg-gray-900 text-white"
-                : "bg-white text-black"
+              navigation.state === "submitting" || isNextButtonDisabled()
+                ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+                : "bg-gray-900 text-white"
             }`}
             disabled={
-              isNextButtonDisabled() || navigation.state === "submitting"
+              navigation.state === "submitting" || isNextButtonDisabled()
             }
           >
-            Upload announcement
+            {navigation.state === "submitting"
+              ? "Uploading announcement..."
+              : "Upload announcement"}
           </button>
         )}
       </div>
@@ -253,7 +255,7 @@ export default function AnnouncementForm() {
             />
           )
       )}
-      
+
       <input type="hidden" name="state" value="active" />
     </Form>
   );

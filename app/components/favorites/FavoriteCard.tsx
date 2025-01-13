@@ -38,11 +38,11 @@ export default function FavoriteCard({ favorite }: FavoriteCardProps) {
     >
       <Link to={`/announcements/${favorite.announcement.id}/details`}>
         <div className="flex gap-6 px-6 py-3 bg-white rounded-lg shadow-sm">
-          <div className="flex items-center max-w-[100px] h-[70px] rounded-md">
+          <div className="flex items-center rounded-lg max-w-[100px] h-[70px] rounded-md">
             <img
               src={favorite.announcement.photoUrl}
               alt={`${favorite.announcement.title} - img`}
-              className="object-contain overflow-hidden"
+              className="object-contain overflow-hidden rounded-lg"
             />
           </div>
           <div className="flex justify-between w-full items-center rounded-lg">
