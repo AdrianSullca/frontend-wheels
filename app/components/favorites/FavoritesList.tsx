@@ -25,9 +25,10 @@ export default function FavoritesList({ favorites }: FavoritesListProps) {
       animate={{ opacity: 1 }}
       transition={{ duration: 0.4 }}
       exit={{ opacity: 0 }}
+      className="pb-6"
       layout
     >
-      <h1 className="font-medium text-lg">Favorites list</h1>
+      <h1 className="font-medium text-lg pb-4">Favorites list</h1>
       <motion.ul className="space-y-4">
         <AnimatePresence>
           {favorites.map((favorite) => (

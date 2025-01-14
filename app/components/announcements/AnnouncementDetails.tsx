@@ -61,7 +61,7 @@ export default function AnnouncementDetails({
       transition={{ duration: 0.4 }}
       exit={{ opacity: 0 }}
       layout
-      className="flex flex-col max-w-[1100px] mx-auto text-black py-5"
+      className="flex flex-col max-w-[1100px] mx-auto text-black py-5 px-5"
     >
       <div className="flex justify-between items-center pb-5">
         <h1 className="text-2xl font-bold">{announcement.title}</h1>
@@ -168,7 +168,7 @@ export default function AnnouncementDetails({
             >
               <path d="M12 20a1 1 0 0 1-.437-.1C11.214 19.73 3 15.671 3 9a5 5 0 0 1 8.535-3.536l.465.465.465-.465A5 5 0 0 1 21 9c0 6.646-8.212 10.728-8.562 10.9A1 1 0 0 1 12 20z" />
             </svg>
-            <span>{isFavorite ? "Remove favorite" : "Save as favorite"}</span>
+            <span className="hidden md:block">{isFavorite ? "Remove favorite" : "Save as favorite"}</span>
           </button>
         )}
       </div>
@@ -201,7 +201,7 @@ export default function AnnouncementDetails({
           )}
         </Carousel>
       </div>
-      <div className="grid grid-cols-[1fr,auto] gap-6 mt-5">
+      <div className="grid md:grid-cols-[1fr,auto] gap-6 mt-5">
         <div className="flex flex-col items-center gap-6 col-start-1 col-end-2">
           <Link className="w-full" to={`/user/${announcement.user_id}/profile`}>
             <div className="flex items-center gap-4 bg-white px-6 py-4 w-full rounded-lg shadow-sm">
@@ -276,7 +276,7 @@ export default function AnnouncementDetails({
             </div>
           </div>
         </div>
-        <div className="col-start-2 col-end-3 h-auto">
+        <div className="hidden md:block col-start-2 col-end-3 h-auto">
           <div className="bg-white shadow-md rounded-lg w-full max-w-md h-auto sticky top-20 p-6 col-start-2 col-end-3 h-auto">
             <h1 className="text-xl font-semibold mb-4 text-center">
               {announcement.brand} - {announcement.model}
@@ -332,6 +332,63 @@ export default function AnnouncementDetails({
               Price includes VAT
             </p>
           </div>
+        </div>
+      </div>
+      <div className="w-full h-auto mt-6 md:hidden">
+        <div className="bg-white shadow-md rounded-lg w-full h-auto sticky top-20 p-6 w-full h-auto">
+          <h1 className="text-xl font-semibold mb-4 text-center">
+            {announcement.brand} - {announcement.model}
+          </h1>
+          <div className="space-y-4">
+            <div className="flex justify-between items-center">
+              <p className="text-gray-600">Base price</p>
+              <p className="">{announcement.price} €</p>
+            </div>
+            <div className="flex justify-between items-center">
+              <p className="text-gray-600">VAT (21%)</p>
+              <p className="">
+                {(Number(announcement.price) * 0.21).toFixed(2)} €
+              </p>
+            </div>
+            <div className="flex justify-between items-center text-custom-orange">
+              <p>Discount</p>
+              <p className="font-medium">
+                -{(Number(announcement.price) * 0.21).toFixed(2)} €
+              </p>
+            </div>
+            <hr className="my-2" />
+            <div className="flex justify-between items-center text-lg font-semibold">
+              <p>Total</p>
+              <p>{announcement.price} €</p>
+            </div>
+          </div>
+          <div className="mt-6 space-y-3">
+            <button
+              disabled={announcement.user_id == userAuth.id}
+              className={`border border-gray-300 py-2 px-4 w-full rounded-lg shadow-sm text-black 
+    transition-all duration-300 ${
+      announcement.user_id == userAuth.id
+        ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+        : "hover:text-custom-gray-hover"
+    }`}
+            >
+              Send a message
+            </button>
+            <button
+              disabled={announcement.user_id == userAuth.id}
+              className={`py-2 px-4 w-full rounded-lg shadow-md text-white 
+    transition-all duration-300 ${
+      announcement.user_id == userAuth.id
+        ? "bg-gray-300 text-gray-400 cursor-not-allowed"
+        : "bg-custom-orange hover:bg-custom-orange-hover"
+    }`}
+            >
+              Buy now
+            </button>
+          </div>
+          <p className="text-xs text-gray-500 mt-4 text-center">
+            Price includes VAT
+          </p>
         </div>
       </div>
     </motion.div>
