@@ -168,7 +168,9 @@ export default function AnnouncementDetails({
             >
               <path d="M12 20a1 1 0 0 1-.437-.1C11.214 19.73 3 15.671 3 9a5 5 0 0 1 8.535-3.536l.465.465.465-.465A5 5 0 0 1 21 9c0 6.646-8.212 10.728-8.562 10.9A1 1 0 0 1 12 20z" />
             </svg>
-            <span className="hidden md:block">{isFavorite ? "Remove favorite" : "Save as favorite"}</span>
+            <span className="hidden md:block">
+              {isFavorite ? "Remove favorite" : "Save as favorite"}
+            </span>
           </button>
         )}
       </div>
@@ -307,7 +309,7 @@ export default function AnnouncementDetails({
             <div className="mt-6 space-y-3">
               <button
                 disabled={announcement.user_id == userAuth.id}
-                className={`border border-gray-300 py-2 px-4 w-full rounded-lg shadow-sm text-black 
+                className={`border mb-3 border-gray-300 py-2 px-4 w-full rounded-lg shadow-sm text-black 
     transition-all duration-300 ${
       announcement.user_id == userAuth.id
         ? "bg-gray-200 text-gray-400 cursor-not-allowed"
@@ -316,17 +318,19 @@ export default function AnnouncementDetails({
               >
                 Send a message
               </button>
-              <button
-                disabled={announcement.user_id == userAuth.id}
-                className={`py-2 px-4 w-full rounded-lg shadow-md text-white 
+              <Link to={`/announcements/${announcement.id}/transaction`}>
+                <button
+                  disabled={announcement.user_id == userAuth.id}
+                  className={`py-2 px-4 w-full rounded-lg shadow-md text-white 
     transition-all duration-300 ${
       announcement.user_id == userAuth.id
         ? "bg-gray-300 text-gray-400 cursor-not-allowed"
         : "bg-custom-orange hover:bg-custom-orange-hover"
     }`}
-              >
-                Buy now
-              </button>
+                >
+                  Buy now
+                </button>
+              </Link>
             </div>
             <p className="text-xs text-gray-500 mt-4 text-center">
               Price includes VAT

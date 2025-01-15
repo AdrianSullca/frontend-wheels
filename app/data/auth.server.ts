@@ -94,7 +94,7 @@ export async function logout(request: Request) {
   );
 
   session.unset("authToken");
-  return redirect("/auth?mode=login", {
+  return redirect("/", {
     headers: {
       "Set-Cookie": await sessionStorage.destroySession(session),
     },

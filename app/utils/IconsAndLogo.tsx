@@ -78,7 +78,7 @@ export const LogoutIcon = () => (
 
 export const TextLogoWheelsLink: React.FC = () => {
     return (
-      <Link to="/announcements">
+      <Link to="/">
         <img
           src="/wheels-text-logo.png"
           alt="Logo"

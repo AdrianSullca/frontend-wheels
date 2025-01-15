@@ -121,9 +121,11 @@ export default function AuthHeader({ user }: AuthHeaderProps) {
                     <span className="ml-1">Profile</span>
                   </Dropdown.Item>
                 </Link>
-                <Dropdown.Item icon={TransactionsIcon}>
-                  <span className="ml-1">Transactions</span>
-                </Dropdown.Item>
+                <Link to={`/user/transactions`} className="w-full">
+                  <Dropdown.Item icon={TransactionsIcon}>
+                    <span className="ml-1">Transactions</span>
+                  </Dropdown.Item>
+                </Link>
                 <Link to={"/user/settings"}>
                   <Dropdown.Item icon={SettingsIcon}>
                     <span className="ml-1">Settings</span>

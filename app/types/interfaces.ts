@@ -83,3 +83,17 @@ export interface Model {
   Model_ID: number;
   Model_Name: string;
 }
+
+export interface Transaction {
+  id: number;
+  buyer_id: number;
+  seller_id: number;
+  announcement_id: number;
+  final_price: number;
+  created_at?: string;
+  updated_at?: string;
+  full_name: string;
+  card_number: string;
+  card_expiration: string;
+  card_cvv: number;
+}
