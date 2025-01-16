@@ -167,7 +167,7 @@ export default function UserProfile({
             )}
           </div>
         </div>
-        <div className="col-start-1 col-end-2 md:col-start-2 md:col-end-3 flex flex-col gap-6 md:mt-6">
+        <div className="col-start-1 col-end-2 md:col-start-2 md:col-end-3 flex flex-col gap-6 md:mt-6 pb-5">
           <AnnouncementAccordion announcements={announcements} />
           <ReviewAccordion reviews={reviews} />
         </div>
