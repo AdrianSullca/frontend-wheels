@@ -29,7 +29,14 @@ export function VehiclePhotosStep({
     }
   };
 
-  const handleRemovePhoto = (index: number) => {
+  const handleRemovePhoto = (
+    index: number,
+    event: React.MouseEvent<HTMLDivElement> | React.KeyboardEvent<HTMLDivElement>
+  ) => {
+    if (event) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
     onRemovePhoto(index);
     setPreviewUrls((prev) => prev.filter((_, i) => i !== index));
   };
@@ -103,10 +110,10 @@ export function VehiclePhotosStep({
             className="relative group max-w-[102px] w-full aspect-square rounded-lg overflow-hidden border-2 border-gray-300"
             role="button"
             tabIndex={0}
-            onClick={() => handleRemovePhoto(index)}
+            onClick={(e) => handleRemovePhoto(index, e)}
             onKeyDown={(e) => {
-              if (e.key === 'Enter' || e.key === ' ') {
-                handleRemovePhoto(index);
+              if (e.key === "Enter" || e.key === " ") {
+                handleRemovePhoto(index, e);
               }
             }}
           >
